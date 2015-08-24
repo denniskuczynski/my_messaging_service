@@ -1,5 +1,7 @@
 package mms.resources;
 
+import mms.MessagePublisher;
+
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -12,12 +14,10 @@ import java.util.HashMap;
 @Produces(MediaType.APPLICATION_JSON)
 public class MessageResource {
     
-    public MessageResource() {
-    }
-
     @POST
     public Map publishMessage(final Map pMessage) {
-        System.out.println("recieved pMessage");
-        return new HashMap();
+        final String groupId = (String)pMessage.get("cid");
+        MessagePublisher.getInstance().publish(groupId, pMessage);
+        return new HashMap(); // return empty map for now
     }
 }
